@@ -11,12 +11,11 @@ const app = () => {
 
   socket.onopen = function(e) {
     alert("[open] Connection established");
-    alert("Sending to server");
     socket.send("My name is John");
   };
 
   socket.onmessage = function(event) {
-    alert(`[message] Data received from server: ${event.data}`);
+    console.log("Got some data: ", event.data)
   };
 
   socket.onclose = function(event) {
@@ -32,7 +31,18 @@ const app = () => {
   socket.onerror = function(error) {
     alert(`[error] ${error.message}`);
   };
+  
+  const handleKeyDown = (e) => {
+    if (e.code === 'Space') {
+      const payload = "My name is John" 
+      console.log("Sending payload to server. Payload: " + payload)
+      socket.send(payload);
+    }
+  }
+
+  window.onkeydown = handleKeyDown
 }
+
 
 
 export default app
