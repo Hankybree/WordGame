@@ -7,7 +7,7 @@ const app = () => {
   document.body.appendChild(pixiApp.view);
 
 
-  let socket = new WebSocket("wss://localhost:8080");
+  let socket = new WebSocket("ws://localhost:8080");
 
   socket.onopen = function(e) {
     alert("[open] Connection established");

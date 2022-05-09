@@ -3,20 +3,22 @@ const commands = require('./commands')
 
 const clients = []
 
-const server = createServer(client => {
+const server = createServer(socket => {
 
-  client.on('connect', () => {
-    clients.push(client)
-    console.log('Client connected')
-    client.send('Connected!')
+  socket.on('open', () => {
+    clients.push(socket)
+    console.log('socket connected')
+    socket.send('Connected!')
   })
 
-  client.on('message', (data) => {
-    clients.send(data.toString())
+  socket.on('message', (data) => {
+    clients.forEach(client => {
+      client.send(data.toString())
+    })
   })
 
-  client.on('disconnect', () => {
-    clients.splice(clients.indexOf(client), 1)
+  socket.on('close', () => {
+    clients.splice(clients.indexOf(socket), 1)
     console.log('Client disconnected')
   })
 
