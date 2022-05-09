@@ -1,10 +1,11 @@
-const { createServer } = require('wss')
+const { WebSocketServer } = require('ws')
 const commands = require('./commands')
 
 const clients = []
 
-const server = createServer(socket => {
+const server = new WebSocketServer({ port: 8080 })
 
+server.on('connection', (socket) => {
   socket.on('open', () => {
     clients.push(socket)
     console.log('socket connected')
@@ -21,7 +22,6 @@ const server = createServer(socket => {
     clients.splice(clients.indexOf(socket), 1)
     console.log('Client disconnected')
   })
-
 })
 
 module.exports = server
