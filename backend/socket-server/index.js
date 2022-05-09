@@ -3,7 +3,7 @@ const commands = require('./commands')
 
 const clients = []
 
-const server = createServer({ port: 8080 }, function connectionListener(client) {
+const server = createServer(client => {
 
   client.on('connect', () => {
     clients.push(client)
